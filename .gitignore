@@ -1,0 +1,18 @@
+# Byte-compiled / binary files
+*.class
+bin/
+out/
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+*.tmp
