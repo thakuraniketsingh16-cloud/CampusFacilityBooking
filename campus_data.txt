@@ -1,0 +1,16 @@
+FAC|F1|AI & Robotics Research Lab|Lab|40|Block A - Room 201|40,Ubuntu 24.04,1|0
+FAC|F2|General Computing Lab|Lab|60|Block B - Room 105|60,Windows 11,0|0
+FAC|F3|Grand Auditorium|Hall|300|Main Block|1,1|0
+FAC|F4|Seminar Hall|Hall|80|Block C - Room 010|1,1|0
+FAC|F5|Indoor Badminton Court|SportsCourt|20|Sports Complex|1,Synthetic Mat,0|0
+FAC|F6|Outdoor Basketball Court|SportsCourt|30|Sports Complex|0,Wooden,1|0
+USR|U1|Aarav Sharma|Student|aarav@campus.edu|Computer Science|21BCS101
+USR|U2|Priya Nair|Student|priya@campus.edu|Electronics|21BEC045
+USR|U3|Kabir Mehta|Student|kabir@campus.edu|Mechanical|21BME078
+USR|U4|Dr. Rajesh Kumar|Faculty|rajesh@campus.edu|Computer Science|EMP2201
+USR|U5|Dr. Sandip Mal|Faculty|sandip@campus.edu|Physics|EMP2088
+BKG|B101|U4|F3|2026-09-19|10:00|12:00|CONFIRMED|AI Guest Lecture
+BKG|B102|U1|F1|2026-09-20|14:00|16:00|CONFIRMED|Robotics Project
+BKG|B103|U2|F5|2026-09-19|17:00|18:00|CONFIRMED|Badminton Practice
+BKG|B104|U5|F4|2026-09-21|09:00|13:00|CONFIRMED|Physics Seminar
+BKG|B105|U3|F2|2026-09-17|10:00|12:00|CANCELLED|CAD Lab (Cancelled)
