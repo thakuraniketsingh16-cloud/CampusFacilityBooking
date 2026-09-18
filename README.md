@@ -60,7 +60,7 @@ The application is developed as a single Java source file (`Main.java`) and prov
 
 *(Replace the placeholder links below with your actual screenshots)*
 
-![Dashboard](replace_with_your_image_link_here.png)
+![Dashboard](screenshots/Booking%20window.png)
 *Figure 1: Campus Analytics Dashboard*
 
 ![Booking Window](replace_with_your_image_link_here.png)
