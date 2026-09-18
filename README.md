@@ -16,7 +16,6 @@ Developed for **Programming in Java** flipped course evaluation on the **VITyart
 | :---: | :---: |
 | ![Menu](screenshots/login.png) | ![Tests](screenshots/students.png) |
 
-*(You can replace or add your own interface screenshots inside the `screenshots/` directory)*
 
 ---
 
