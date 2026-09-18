@@ -58,10 +58,6 @@ The application is developed as a single Java source file (`Main.java`) and prov
 
 ## 📸 Screenshots
 
-*(Replace the placeholder links below with your actual screenshots)*
-
-![Dashboard](screenshots/Booking%20window.png)
-*Figure 1: Campus Analytics Dashboard*
-
-![Booking Window](replace_with_your_image_link_here.png)
-*Figure 2: Facility Booking & Collision Detection*
+| Campus Analytics | Booking Window |
+|---|---|
+| ![Login screen](screenshots/BookingWindow.png) | ![Dashboard screen](screenshots/dashboard.png) |
