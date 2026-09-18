@@ -1,208 +1,169 @@
-﻿# PROJECT REPORT: SMART CAMPUS FACILITY & LAB BOOKING SYSTEM
+﻿# Project Report: Smart Campus Facility & Lab Booking System
 
 ---
 
-### Course Information
+## 1. Cover Page
 * **Course Title:** Programming in Java
+* **Evaluation Scheme:** Flipped Course Evaluation (Build Your Own Project)
+* **Platform:** VITyarthi Portal
 * **Project Title:** Smart Campus Facility & Lab Booking System
-* **Submission Platform:** VITyarthi
-* **Target Audience:** Academic Evaluators & Automated Assessment Pipeline
 * **Student Name:** Aniket Singh
-* **GitHub Handle:** `thakuraniketsingh16-cloud`
-* **Development Language:** Java SE 17+ (Standard Edition)
-* **Dependencies:** Standard Java SE Library (Zero External Dependencies)
+* **GitHub Username:** `thakuraniketsingh16-cloud`
+* **Repository URL:** `https://github.com/thakuraniketsingh16-cloud/CampusFacilityBooking`
+* **Submission Date:** September 2026
+* **Implementation:** Pure Java SE 17+ (Single-File Architecture `Main.java`)
 
 ---
 
-## 1. Abstract
+## 2. Introduction
+In higher educational institutions, academic infrastructure is heavily shared across multiple faculties, departments, research groups, and student clubs. Facilities such as high-performance computing clusters, hardware prototyping laboratories, seminar auditoriums, and sports grounds experience intense booking competition. 
 
-Modern universities house high-value, shared academic assets including high-performance computing clusters, IoT and embedded hardware laboratories, grand conference auditoriums, and sports courts. Managing reservations across student bodies and faculty members frequently encounters bottlenecks, scheduling collisions, and unauthorized bookings.
-
-This project implements the **Smart Campus Facility & Lab Booking System**, a lightweight, console-driven Java application. The software applies Object-Oriented Programming (OOP) principles—including abstract classes, inheritance hierarchies, dynamic polymorphism, and encapsulation—to model physical facilities and campus user personas. The system features mathematical interval-overlap conflict detection, role-based duration quotas (students limited to 2 hours, faculty up to 6 hours), flat-file persistence (`campus_data.txt`), and automated test flags (`--test`, `--demo`) for evaluation compatibility.
-
----
-
-## 2. Problem Statement & System Objectives
-
-### 2.1 Problem Statement
-Uncoordinated facility booking leads to:
-1. Double-booking identical time slots for the same room.
-2. Resource monopolization by students over-reserving computing labs.
-3. Unauthorized reservations of large-capacity auditoriums without faculty approval.
-4. Absence of persistent scheduling records.
-
-### 2.2 System Objectives
-1. **Zero External Dependencies:** Compiles and runs out-of-the-box using standard `javac Main.java` and `java Main`.
-2. **Object-Oriented Design:** Implement abstraction, inheritance, polymorphism, and encapsulation across all system components.
-3. **Conflict Detection Engine:** Algorithmic prevention of overlapping time slots.
-4. **Role-Based Constraints:** Differentiate session limits and permissions between Student and Faculty users.
-5. **Flat-File Database:** Persist records in human-readable pipe-delimited format (`campus_data.txt`).
-6. **Automated Assessment Compliance:** Provide non-interactive CLI flags (`--test`, `--demo`) for automated grading scripts.
+The **Smart Campus Facility & Lab Booking System** is a console-driven software solution engineered entirely in standard Java. The system incorporates Object-Oriented Programming (OOP) paradigms to model polymorphic facilities and user personas, enforces algorithmic time-interval collision detection, implements role-based duration quotas, and persists state in a structured flat file database (`campus_data.txt`).
 
 ---
 
-## 3. Object-Oriented Architecture & Class Hierarchy
-
-```mermaid
-classDiagram
-    class Facility {
-        <<abstract>>
-        -String id
-        -String name
-        -String type
-        -int capacity
-        -String location
-        -boolean underMaintenance
-        +getSpecificDetails()* String
-        +getHourlyRate()* double
-    }
-
-    class Lab {
-        -int workstations
-        -String operatingSystem
-        -boolean hasGpu
-        +getSpecificDetails() String
-    }
-
-    class Hall {
-        -boolean hasProjector
-        -boolean hasSoundSystem
-        -boolean isAirConditioned
-        +getSpecificDetails() String
-    }
-
-    class SportsCourt {
-        -String surfaceType
-        -boolean isIndoor
-        -boolean hasLighting
-        +getSpecificDetails() String
-    }
-
-    class User {
-        <<abstract>>
-        #String userId
-        #String name
-        #String role
-        #String email
-        #String department
-        +getMaxBookingHours()* int
-        +canBookAuditoriumDirectly()* boolean
-    }
-
-    class Student {
-        -String regNo
-        +getMaxBookingHours() int
-        +canBookAuditoriumDirectly() boolean
-    }
-
-    class FacultyMember {
-        -String employeeId
-        -String designation
-        +getMaxBookingHours() int
-        +canBookAuditoriumDirectly() boolean
-    }
-
-    class Booking {
-        -String bookingId
-        -String userId
-        -String facilityId
-        -LocalDate date
-        -LocalTime startTime
-        -LocalTime endTime
-        -String status
-        -String purpose
-        +overlapsWith(LocalDate, LocalTime, LocalTime) boolean
-    }
-
-    Facility <|-- Lab
-    Facility <|-- Hall
-    Facility <|-- SportsCourt
-
-    User <|-- Student
-    User <|-- FacultyMember
-
-    Booking --> Facility : reserves
-    Booking --> User : booked by
-```
+## 3. Problem Statement
+Manual booking using paper logbooks or informal messaging introduces serious operational flaws:
+1. **Simultaneous Booking Collisions:** Multiple groups arrive at the same facility having received overlapping approvals.
+2. **Resource Monopolization:** Students reserve specialized computer laboratories for full days without duration limits.
+3. **Unauthorized Bookings:** High-capacity auditoriums require institutional approvals, yet lack access barriers.
+4. **Disjoint Scheduling Records:** Lack of persistent data causes scheduling disputes and prevents utilization analysis.
 
 ---
 
-## 4. Core OOP Principles Applied
+## 4. Functional Requirements
+The system contains three major functional modules:
 
-### 4.1 Abstraction
-Abstract base classes `Facility` and `User` establish baseline contracts while concealing concrete implementation details:
-```java
-abstract class Facility {
-    public abstract String getSpecificDetails();
-    public abstract double getHourlyRate();
-}
-```
+### Module 1: Facility Catalog & Schedule Management
+* Maintains polymorphic representations of campus facilities: `Lab`, `Hall`, `SportsCourt`.
+* Displays capacity, location, hardware specs, and air-conditioning status.
+* Queries date-filtered schedules displaying active confirmed bookings chronologically.
 
-### 4.2 Inheritance
-- `Lab`, `Hall`, and `SportsCourt` inherit common attributes (`id`, `name`, `capacity`, `location`, `underMaintenance`) from `Facility`.
-- `Student` and `FacultyMember` inherit identity fields (`userId`, `name`, `email`, `department`) from `User`.
+### Module 2: Reservation & Collision Resolution Engine
+* Validates user existence, operating hours (07:00 to 22:00), and timestamp sanity.
+* Evaluates mathematical interval overlap: `start1 < end2 && end1 > start2`.
+* Enforces role quotas: Students max 2 hours; Faculty max 6 hours.
+* Restricts direct grand auditorium reservations to faculty users.
+* Supports booking cancellation, instantly freeing the slot.
 
-### 4.3 Polymorphism (Dynamic Method Dispatch)
-Role-specific policies and details are dynamically resolved at runtime:
-```java
-// Student: Max 2 hours per session, no direct auditorium booking
-@Override
-public int getMaxBookingHours() { return 2; }
-@Override
-public boolean canBookAuditoriumDirectly() { return false; }
-
-// FacultyMember: Up to 6 hours for research & lectures, direct auditorium booking
-@Override
-public int getMaxBookingHours() { return 6; }
-@Override
-public boolean canBookAuditoriumDirectly() { return true; }
-```
-
-### 4.4 Encapsulation
-Instance variables are private and protected with validated getters and setters. Time interval overlap logic encapsulates mathematical boundary validations.
-
-### 4.5 Custom Exception Handling
-Domain-specific exceptions protect against operational violations:
-- `CampusBookingException`: Base checked exception.
-- `SlotUnavailableException`: Raised when requested slot collides with an active reservation.
-- `InvalidInputException`: Raised when duration exceeds user quota or timestamps are inverted.
+### Module 3: Campus Analytics & Reporting
+* Summarizes total facilities, registered users, confirmed vs. cancelled bookings.
+* Computes booking frequency per facility using Java Stream API.
+* Groups and displays campus-wide activity by academic department.
 
 ---
 
-## 5. Persistence & Storage Format
-
-Data is maintained in `campus_data.txt` using pipe-delimited records:
-```
-# Format Specifications:
-FAC|ID|Name|Type|Capacity|Location|ExtraDetail
-USR|ID|Name|Role|Email|Department|ExtraDetail
-BKG|BookingID|UserID|FacilityID|Date|StartTime|EndTime|Status|Purpose
-
-# Sample Records:
-FAC|F101|Alan Turing Computer Lab|Lab|45|Tech Block 2nd Floor|Workstations: 45, OS: Linux Workstations, Dedicated GPU: Yes (NVIDIA RTX)
-USR|U1001|Aarav Sharma|Student|aarav@campus.edu|Computer Science|RegNo: 24BCE1042
-BKG|B101|U1001|F101|2026-09-20|10:00|12:00|CONFIRMED|AI Project Lab Work
-```
+## 5. Non-Functional Requirements
+1. **Performance:** Sub-millisecond conflict checks and $O(1)$ in-memory lookups using `LinkedHashMap`.
+2. **Reliability:** Deterministic validation and atomic flat-file updates guaranteeing persistence.
+3. **Usability:** Formatted console tables, clear prompts, and dual interactive/headless CLI flags.
+4. **Maintainability:** Strict adherence to OOP principles with single-responsibility class modularity.
+5. **Security & Authorization:** Role-based permissions preventing unauthorized student bookings.
+6. **Error Handling Strategy:** Custom checked exception hierarchy preventing application crashes.
 
 ---
 
-## 6. Test Suite & Verification Results
+## 6. System Architecture
+The application adheres to a 3-Tier Layered Console Architecture in pure Java:
+* **Presentation Tier (`Main.java`):** Console I/O, user session state, menus, and headless CLI flags (`--test`, `--demo`).
+* **Business Logic Tier (`CampusDatabase`):** Validates intervals, enforces quotas, resolves collisions, and computes metrics.
+* **Data Access Tier (`campus_data.txt`):** Persistent flat-file serialization and deserialization via buffered character streams.
 
-Executed via `java Main --test`:
+---
+
+## 7. Design Diagrams
+
+### 7.1 Use Case Diagram
+* **Actors:** Student, Faculty, Administrator.
+* **Use Cases:** Browse Facilities, Check Schedule, Make Reservation, Cancel Booking, View Analytics, Run Test Suite.
+
+### 7.2 Workflow Diagram
+1. User selects facility & submits desired date and time interval.
+2. System checks facility maintenance status.
+3. System verifies duration against user role quota (Student = 2 hrs, Faculty = 6 hrs).
+4. System executes interval overlap algorithm against all existing bookings.
+5. If collision occurs, `SlotUnavailableException` is thrown; otherwise, record is persisted to `campus_data.txt`.
+
+### 7.3 Sequence Diagram
+* `User` &rarr; `Main.java` &rarr; `CampusDatabase.createBooking()` &rarr; `Booking.overlapsWith()` &rarr; `File Persistence` &rarr; `Success Message`.
+
+### 7.4 Class / Component Diagram
+* `Facility` (Abstract) &rarr; `Lab`, `Hall`, `SportsCourt`.
+* `User` (Abstract) &rarr; `Student`, `FacultyMember`.
+* `Booking` entity referencing `Facility` and `User`.
+* `CampusDatabase` managing registries and persistence.
+
+### 7.5 Database & Storage Design (ER Diagram)
+* **USER** `(PK userId, name, role, email, department, regNo/empId)` (1 to N with BOOKING).
+* **FACILITY** `(PK id, name, type, capacity, location, extraSpecs)` (1 to N with BOOKING).
+* **BOOKING** `(PK bookingId, FK userId, FK facilityId, date, startTime, endTime, status, purpose)`.
+
+---
+
+## 8. Design Decisions & Rationale
+1. **Single-File `Main.java` Architecture:** Eliminates package declaration and classpath mismatch issues when evaluating across Windows, Linux, and macOS terminal environments.
+2. **Zero Third-Party Dependencies:** Guarantees instant compilation on standard JDK 17+ without requiring Maven, Gradle, or external `.jar` downloads.
+3. **Flat Text Database (`campus_data.txt`):** Human-readable pipe-delimited format allows evaluators to inspect records in any text editor without installing database engines.
+4. **Mathematical Interval Overlap Algorithm:** Evaluates `start1 < end2 && end1 > start2` to prevent overlaps while cleanly permitting adjacent, contiguous bookings.
+
+---
+
+## 9. Implementation Details
+* **Dynamic Polymorphism:** `getMaxBookingHours()` and `getSpecificDetails()` dynamically dispatched at runtime.
+* **Encapsulation:** Private/protected fields accessed strictly via validated methods.
+* **Exception Hierarchy:** `CampusBookingException`, `SlotUnavailableException`, `InvalidInputException` separate business failures from unexpected crashes.
+
+---
+
+## 10. Screenshots / Results
+* **Main Menu & Login:** Clean interactive console UI with active user tracking.
+* **Facilities Catalog:** Tabular display showing IDs, types, capacities, locations, and hardware specifications.
+* **Reservation Engine:** Confirmation displaying reference ID, reserved times, and status.
+* **Conflict Prevention:** Warning message reporting conflicting reservation ID and time window.
+* **Analytics Report:** Breakdown of bookings per facility and activity per academic department.
+
+---
+
+## 11. Testing Approach
+An automated self-diagnostic test harness (`java Main --test`) executes 6 comprehensive test scenarios:
 
 | Test # | Test Case Description | Expected Result | Actual Result | Verdict |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Facility & User Catalog Loading | Parse entities from data file | 6 facilities & 5 users loaded | **PASS** |
-| 2 | Standard Booking Creation | Successfully create reservation | Booking created (CONFIRMED) | **PASS** |
-| 3 | Overlap & Collision Check | Block double-booking same slot | `SlotUnavailableException` caught | **PASS** |
-| 4 | Student Quota Enforcement | Reject 4-hour booking by student | `InvalidInputException` caught (limit 2 hrs) | **PASS** |
-| 5 | Grand Auditorium Restriction | Block student from booking hall directly | `CampusBookingException` caught | **PASS** |
-| 6 | Cancellation & Slot Re-allocation | Free slot on cancel & allow rebooking | Slot re-booked successfully | **PASS** |
+| 1 | Catalog Loading | Parse entities from data file | 6 facilities, 5 users loaded | **PASS** |
+| 2 | Booking Creation | Create valid reservation | Booking B107 created (CONFIRMED) | **PASS** |
+| 3 | Collision Check | Block double-booking same room | `SlotUnavailableException` caught | **PASS** |
+| 4 | Student Quota | Reject 4-hour booking by student | `InvalidInputException` caught (limit 2 hrs) | **PASS** |
+| 5 | Auditorium Restriction | Block student from booking hall directly | `CampusBookingException` caught | **PASS** |
+| 6 | Slot Re-allocation | Free slot on cancel & allow rebook | Slot re-booked successfully | **PASS** |
 
-**Overall Test Score:** 6 / 6 Tests Passed (100.0%)
+**Overall Score:** 6 / 6 Tests Passed (100.0%)
 
 ---
 
-## 7. Declaration of Originality
+## 12. Challenges Faced
+* **Interval Edge Cases:** Ensuring back-to-back contiguous bookings (e.g. 10:00-12:00 and 12:00-14:00) do not trigger false-positive collisions.
+* **Test Idempotency:** Ensuring automated tests remain 100% repeatable across multiple test runs without corrupting persistent data.
+* **Scanner Buffer Management:** Preventing skipped prompts when reading numbers followed by full lines.
 
-I hereby declare that this project, entitled **Smart Campus Facility & Lab Booking System**, is my own original work submitted for the **Programming in Java** flipped course evaluation on the VITyarthi platform. All code logic, OOP structures, and tests were written independently in compliance with academic guidelines.
+---
+
+## 13. Learnings & Key Takeaways
+* Effective application of dynamic polymorphism in enforcing business rules.
+* Structuring custom checked exceptions to provide actionable error feedback in terminal applications.
+* Designing automated diagnostic CLI modes for automated grading pipelines.
+
+---
+
+## 14. Future Enhancements
+* REST API & Web Dashboard using Spring Boot and React.
+* Relational database migration to PostgreSQL with JPA/Hibernate.
+* QR-code entry pass generation for laboratory physical access.
+* Automated SMS and email confirmation dispatches.
+
+---
+
+## 15. References
+1. Oracle Corporation. *Java Platform, Standard Edition Documentation (JDK 17/21/26)*.
+2. Cay S. Horstmann. *Core Java Volume I — Fundamentals (12th Edition)*, Prentice Hall, 2022.
+3. Erich Gamma et al. *Design Patterns: Elements of Reusable Object-Oriented Software*, Addison-Wesley, 1994.
+4. VITyarthi Course Management. *Programming in Java Flipped Course Guidelines & Evaluation Rubric*, 2026.

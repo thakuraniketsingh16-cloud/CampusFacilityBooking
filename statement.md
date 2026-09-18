@@ -1,46 +1,53 @@
-﻿# Problem Statement: Smart Campus Facility & Lab Booking System
+﻿# statement.md — Project Statement & Scope Specification
 
-## Course Details
+## Project Title
+**Smart Campus Facility & Lab Booking System (CFBS)**
+
+## Course Information
 * **Course Title:** Programming in Java
-* **Academic Term:** Flipped Course Project Evaluation
-* **Submission Platform:** VITyarthi
+* **Evaluation Scheme:** Flipped Course Evaluation (Build Your Own Project)
+* **Platform:** VITyarthi
 
 ---
 
-## 1. Problem Description
-Across a modern university campus, shared academic facilities—including high-performance computing labs, IoT and embedded hardware laboratories, grand conference auditoriums, and sports courts—face continuous reservation conflicts, double-bookings, and lack of visibility.
+## 1. Problem Statement
+In higher educational institutions such as university campuses, shared physical resources—including high-performance computing centers, embedded systems and IoT hardware laboratories, seminar halls, conference auditoriums, and sports courts—face frequent reservation conflicts, resource monopolization, and coordination bottlenecks. 
 
-Traditional manual registers or ad-hoc email requests suffer from:
-1. **Slot Overlap & Collision:** Multiple student groups or faculties reserving the same room for identical or overlapping time intervals.
-2. **Resource Monopolization:** Students over-reserving computing laboratories for excessive durations without policy limits.
-3. **Unauthorized Bookings:** Students booking high-capacity auditoriums without administrative or faculty advisor endorsement.
-4. **Disjoint Records:** Inability to track facility schedules, utilization rates, and department-wise reservations in real time.
+Traditional paper registers or ad-hoc emails fail to provide real-time schedule visibility, leading to overlapping slot reservations, students hogging lab workstations for excessive hours, and unauthorized bookings of high-capacity auditoriums without faculty approval. A centralized, rule-enforced console system is required to automate reservation validation, enforce role-based duration quotas, and maintain an immutable historical record of all bookings.
 
 ---
 
-## 2. Project Objectives
-The objective of this project is to engineer a lightweight, console-driven Java application utilizing Object-Oriented Programming (OOP) paradigms:
+## 2. Scope of the Project
+The **Smart Campus Facility & Lab Booking System** is an authentic, console-based Java application built purely with standard Java SE (JDK 17+ / Java 26) with zero external library dependencies. 
 
-1. **Object-Oriented Architecture:**
-   - **Abstraction:** Abstract base classes (`Facility`, `User`) defining contracts.
-   - **Inheritance:** Concrete subclasses (`Lab`, `Hall`, `SportsCourt` extending `Facility`; `Student`, `FacultyMember` extending `User`).
-   - **Polymorphism:** Dynamic method dispatch on `getMaxBookingHours()` and facility details.
-   - **Encapsulation:** Private data members with validated accessors and time interval overlap checks.
-2. **Conflict & Overlap Resolution:**
-   - Strict interval overlap detection logic `[start1 < end2 && end1 > start2]` preventing double-booking.
-3. **Role-Based Booking Quotas:**
-   - Students constrained to a maximum of 2 hours per session.
-   - Faculty permitted up to 6 hours for research and seminars.
-   - Restrict direct grand auditorium reservations to faculty users.
-4. **Persistent Data Storage:**
-   - Flat file database (`campus_data.txt`) using structured pipe-delimited records.
-5. **Evaluator-Friendly Execution:**
-   - Command-line flags (`--test`, `--demo`) for automated evaluation pipelines.
+The scope includes:
+* Modeling multiple categories of physical facilities with distinct capacity, hardware specs, and location attributes.
+* Managing user roles (Students and Faculty) with dynamic polymorphic session constraints.
+* Enforcing algorithmic time-slot conflict detection `[start1 < end2 && end1 > start2]` across all booking requests.
+* Persisting all system state across executions in a structured, single flat-file database (`campus_data.txt`).
+* Supporting dual execution workflows: interactive console menus for users and non-interactive command-line test flags (`--test`, `--demo`) for automated evaluation environments.
 
 ---
 
-## 3. Scope & Deliverables
-* **`Main.java`**: Self-contained Java source file containing all class definitions and CLI controller.
-* **`screenshots/`**: Folder for capturing and displaying interface execution screens.
-* **`Project Report - Smart Campus Facility & Lab Booking System.pdf`**: Comprehensive academic report with UML diagrams.
-* **`README.md`**: Complete setup and execution guide.
+## 3. Target Users
+1. **Students**:
+   * Browse available laboratories, seminar rooms, and sports courts.
+   * Reserve facilities for academic projects, study groups, and extracurricular clubs.
+   * Subject to fair-usage policy: maximum 2 hours per booking session; restricted from booking large auditoriums directly.
+2. **Faculty Members & Researchers**:
+   * Reserve specialized hardware laboratories and seminar halls for lectures, research sessions, and conferences.
+   * Extended booking privileges: up to 6 hours per reservation; authorized to directly reserve grand auditoriums.
+3. **Campus Administrators / Wardens / Evaluators**:
+   * Inspect real-time facility availability schedules.
+   * View campus-wide analytics, booking frequencies, and department activity metrics.
+   * Execute built-in diagnostic test suites for automated grading and verification.
+
+---
+
+## 4. High-Level Features
+* **Facility Catalog & Schedule Explorer**: Real-time browsing of computing labs, auditoriums, and sports courts with complete hardware/amenity specifications and date-filtered confirmed bookings.
+* **Intelligent Collision-Free Reservation Engine**: Mathematical interval-overlap conflict detection rejecting overlapping reservations for the same room.
+* **Role-Based Quota & Authorization Enforcement**: Polymorphic dispatch applying differentiated session limits (2 hrs vs 6 hrs) and access permissions.
+* **Booking Cancellation & Slot De-allocation**: Secure cancellation by booking owners or faculty administrators that immediately frees the slot for subsequent reservations.
+* **Department & Facility Analytics**: Live statistical aggregation showing total bookings, active reservations, facility utilization counts, and department engagement.
+* **Automated Self-Diagnostic Test Suite**: Built-in 6-point automated verification engine (`--test`) validating data parsing, conflict rejection, quota rules, and rebooking with zero keyboard interaction.
