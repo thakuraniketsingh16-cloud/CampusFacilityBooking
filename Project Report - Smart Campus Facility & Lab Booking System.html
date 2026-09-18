@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Project Report - Smart Campus Facility & Lab Booking System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #2c3e50; padding: 25px; margin: 0 auto; max-width: 850px; }
+        .header { text-align: center; border-bottom: 2px solid #2980b9; padding-bottom: 15px; margin-bottom: 25px; }
+        h1 { color: #2c3e50; margin: 5px 0; font-size: 24px; text-transform: uppercase; }
+        h2 { color: #7f8c8d; margin: 3px 0; font-size: 15px; font-weight: normal; }
+        .meta { background: #ecf0f1; padding: 12px 20px; border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13.5px; margin-bottom: 25px; }
+        h3 { color: #2980b9; border-bottom: 1px solid #bdc3c7; padding-bottom: 4px; margin-top: 25px; font-size: 17px; }
+        p, li { font-size: 13.5px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        th, td { border: 1px solid #bdc3c7; padding: 8px 10px; text-align: left; }
+        th { background: #34495e; color: #fff; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 4px; font-size: 12px; }
+        .badge { background: #27ae60; color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 11px; }
+        .btn-print { background: #2980b9; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; float: right; margin-bottom: 15px; }
+        @media print { .btn-print { display: none; } body { padding: 0; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+    <div class="header">
+        <h1>Smart Campus Facility & Lab Booking System</h1>
+        <h2>Flipped Course Project Report - Programming in Java</h2>
+        <h2>Platform: VITyarthi | Academic Evaluation</h2>
+    </div>
+    <div class="meta">
+        <div><strong>Course:</strong> Programming in Java</div>
+        <div><strong>Platform:</strong> VITyarthi</div>
+        <div><strong>Student Name:</strong> Aniket Singh</div>
+        <div><strong>GitHub Handle:</strong> thakuraniketsingh16-cloud</div>
+        <div><strong>Architecture:</strong> Pure Java SE (Single File Main.java)</div>
+        <div><strong>Status:</strong> 100% Tests Passed (Zero External JARs)</div>
+    </div>
+    <h3>1. Abstract</h3>
+    <p>Managing university shared infrastructure—including computing labs, seminar halls, auditoriums, and sports courts—requires automated conflict resolution and role-based policies. The <strong>Smart Campus Facility & Lab Booking System</strong> is a console-based Java application developed to demonstrate core Object-Oriented Programming (OOP) paradigms. It incorporates inheritance hierarchies, dynamic method dispatch, mathematical interval overlap conflict detection, and single-file flat database persistence.</p>
+    
+    <h3>2. Problem Statement & System Objectives</h3>
+    <p>Ad-hoc manual booking leads to double-booking identical slots, students monopolizing computer labs without time limits, and unauthorized reservations of large auditoriums. This software enforces automated interval overlap validation, role-based session quotas, and permission checks.</p>
+    
+    <h3>3. Object-Oriented Architecture</h3>
+    <ul>
+        <li><strong>Facility Hierarchy:</strong> Abstract class <code>Facility</code> extended by concrete classes <code>Lab</code> (workstations, OS, GPU), <code>Hall</code> (A/V, projector, AC), and <code>SportsCourt</code> (surface type, indoor/outdoor, floodlights).</li>
+        <li><strong>User Hierarchy:</strong> Abstract class <code>User</code> extended by <code>Student</code> (restricted to 2-hour sessions) and <code>FacultyMember</code> (permitted up to 6 hours with auditorium booking authorization).</li>
+        <li><strong>Booking Entity:</strong> Encapsulates reservation interval and conflict validation logic.</li>
+    </ul>
+
+    <h3>4. Core OOP Principles Applied</h3>
+    <table>
+        <tr><th>OOP Concept</th><th>Application in System</th></tr>
+        <tr><td><strong>Abstraction</strong></td><td>Abstract classes <code>Facility</code> and <code>User</code> define essential method contracts while concealing concrete implementation.</td></tr>
+        <tr><td><strong>Inheritance</strong></td><td><code>Lab</code>, <code>Hall</code>, <code>SportsCourt</code> inherit from <code>Facility</code>; <code>Student</code>, <code>FacultyMember</code> inherit from <code>User</code>.</td></tr>
+        <tr><td><strong>Polymorphism</strong></td><td>Dynamic method dispatch computes quota limits and displays specialized facility specs based on runtime instance.</td></tr>
+        <tr><td><strong>Encapsulation</strong></td><td>Private fields accessed exclusively via validated methods; interval overlap logic encapsulated in <code>Booking</code>.</td></tr>
+        <tr><td><strong>Exception Handling</strong></td><td>Custom exceptions (<code>CampusBookingException</code>, <code>SlotUnavailableException</code>, <code>InvalidInputException</code>) protect against conflicts.</td></tr>
+    </table>
+
+    <h3>5. Automated Test Suite Results</h3>
+    <table>
+        <tr><th>Test #</th><th>Test Case</th><th>Expected Result</th><th>Actual Result</th><th>Status</th></tr>
+        <tr><td>1</td><td>Facility & User Catalog Loading</td><td>Parse entities from data file</td><td>6 facilities, 5 users loaded</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>2</td><td>Standard Booking Creation</td><td>Create valid reservation</td><td>Booking B104 created (CONFIRMED)</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>3</td><td>Slot Collision & Overlap Check</td><td>Block double-booking same slot</td><td>SlotUnavailableException caught</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>4</td><td>Student Max Quota Enforcement</td><td>Reject 4-hour booking by student</td><td>InvalidInputException caught (limit 2 hrs)</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>5</td><td>Auditorium Booking Restriction</td><td>Block student from booking hall</td><td>CampusBookingException caught</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>6</td><td>Cancellation & Slot Re-allocation</td><td>Free slot on cancel & allow rebook</td><td>Slot re-booked successfully</td><td><span class="badge">PASS</span></td></tr>
+    </table>
+    <p><strong>Overall Score: 6 / 6 Tests Passed (100.0%)</strong></p>
+
+    <h3>6. Declaration of Originality</h3>
+    <p><em>I declare that this project and its accompanying documentation are my original work submitted for the Programming in Java course on the VITyarthi platform. All code logic, OOP structures, and tests were written independently in compliance with academic guidelines.</em></p>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿# Problem Statement: Smart Hostel Management System (SHMS)
+﻿# Problem Statement: Smart Campus Facility & Lab Booking System
 
 ## Course Details
 * **Course Title:** Programming in Java
@@ -8,38 +8,39 @@
 ---
 
 ## 1. Problem Description
-University residential campus hostels manage thousands of students, varying room categories (Standard Non-AC, Deluxe AC), fluctuating occupancy rates, and complex semester fee structures (room rent, utility charges, electrical tariffs, and mess billing).
+Across a modern university campus, shared academic facilities—including high-performance computing labs, IoT and embedded hardware laboratories, grand conference auditoriums, and sports courts—face continuous reservation conflicts, double-bookings, and lack of visibility.
 
-Traditional manual ledger or spreadsheet-based tracking suffers from:
-1. **Double-Allocation & Overcrowding:** Rooms assigned beyond their maximum bed capacity.
-2. **Billing Inconsistencies:** Difficulty calculating polymorphic fee components across diverse room categories.
-3. **Fee Defaulter Tracking:** Inability to readily track outstanding dues prior to room vacation or semester checkouts.
-4. **Disjoint Record Keeping:** Lack of persistent, human-readable records connecting room inventories, student allocations, and transaction receipts.
+Traditional manual registers or ad-hoc email requests suffer from:
+1. **Slot Overlap & Collision:** Multiple student groups or faculties reserving the same room for identical or overlapping time intervals.
+2. **Resource Monopolization:** Students over-reserving computing laboratories for excessive durations without policy limits.
+3. **Unauthorized Bookings:** Students booking high-capacity auditoriums without administrative or faculty advisor endorsement.
+4. **Disjoint Records:** Inability to track facility schedules, utilization rates, and department-wise reservations in real time.
 
 ---
 
 ## 2. Project Objectives
-The objective of this project is to develop a lightweight, 100% terminal-executable, zero-dependency Java application demonstrating core Object-Oriented Programming (OOP) principles:
+The objective of this project is to engineer a lightweight, console-driven Java application utilizing Object-Oriented Programming (OOP) paradigms:
 
 1. **Object-Oriented Architecture:**
-   - **Abstraction:** Abstract base classes (`Room`, `Person`) defining interface contracts.
-   - **Inheritance:** Concrete subclasses (`StandardRoom`, `DeluxeACRoom` extending `Room`; `Student` extending `Person`).
-   - **Polymorphism:** Dynamic method dispatch for `calculateTotalFee(months)` and room detail resolution.
-   - **Encapsulation:** Private data members protected via validated accessors and state modifiers.
-2. **Capacity & Bed Allocation Safety:**
-   - Enforce capacity limits with custom checked exceptions (`RoomFullException`, `InvalidDataException`).
-3. **Fee Calculation & Payment Tracking:**
-   - Calculate semester fees based on room category and utility surcharges.
-   - Record payments, issue transaction receipts, and track defaulters.
+   - **Abstraction:** Abstract base classes (`Facility`, `User`) defining contracts.
+   - **Inheritance:** Concrete subclasses (`Lab`, `Hall`, `SportsCourt` extending `Facility`; `Student`, `FacultyMember` extending `User`).
+   - **Polymorphism:** Dynamic method dispatch on `getMaxBookingHours()` and facility details.
+   - **Encapsulation:** Private data members with validated accessors and time interval overlap checks.
+2. **Conflict & Overlap Resolution:**
+   - Strict interval overlap detection logic `[start1 < end2 && end1 > start2]` preventing double-booking.
+3. **Role-Based Booking Quotas:**
+   - Students constrained to a maximum of 2 hours per session.
+   - Faculty permitted up to 6 hours for research and seminars.
+   - Restrict direct grand auditorium reservations to faculty users.
 4. **Persistent Data Storage:**
-   - Flat file database (`hostel_data.txt`) using structured pipe-delimited records.
+   - Flat file database (`campus_data.txt`) using structured pipe-delimited records.
 5. **Evaluator-Friendly Execution:**
-   - Command-line flags (`--test`, `--demo`) for automated assessment pipelines.
+   - Command-line flags (`--test`, `--demo`) for automated evaluation pipelines.
 
 ---
 
 ## 3. Scope & Deliverables
 * **`Main.java`**: Self-contained Java source file containing all class definitions and CLI controller.
-* **`screenshots/`**: Terminal output captures demonstrating Login, Admin Dashboard, Student Management, and Fee Records.
-* **`Project Report - Smart Hostel Management System.md`**: Academic report with UML architecture and test suite results.
-* **`README.md`**: Clear setup and execution guide for manual and automated evaluation.
+* **`screenshots/`**: Folder for capturing and displaying interface execution screens.
+* **`Project Report - Smart Campus Facility & Lab Booking System.pdf`**: Comprehensive academic report with UML diagrams.
+* **`README.md`**: Complete setup and execution guide.

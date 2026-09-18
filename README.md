@@ -1,6 +1,6 @@
-﻿# Smart Hostel Management System (SHMS)
+﻿# Smart Campus Facility & Lab Booking System
 
-A robust, console-driven Java application for managing university hostel rooms, bed allocations, student records, and fee payment tracking with automated capacity enforcement and persistent flat-file storage.
+A lightweight, console-driven Java application for scheduling, managing, and reserving university facilities, computing laboratories, seminar halls, and sports courts with automated time-slot conflict detection, role-based quotas, and persistent flat-file storage.
 
 Developed for **Programming in Java** course evaluation.
 
@@ -8,13 +8,15 @@ Developed for **Programming in Java** course evaluation.
 
 ## 📸 Screenshots
 
-| Login & Authentication | Warden Admin Dashboard |
+| Facilities Catalog | Reservation & Conflict Check |
 | :---: | :---: |
-| ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) |
+| ![Facilities](screenshots/dashboard.png) | ![Bookings](screenshots/fees.png) |
 
-| Student Management & Profiles | Fee Management & Receipts |
+| User Session & Menu | Diagnostic Test Suite |
 | :---: | :---: |
-| ![Students](screenshots/students.png) | ![Fees](screenshots/fees.png) |
+| ![Menu](screenshots/login.png) | ![Tests](screenshots/students.png) |
+
+*(You can replace or add your own screenshots inside the `screenshots/` directory)*
 
 ---
 
@@ -22,19 +24,18 @@ Developed for **Programming in Java** course evaluation.
 
 ### Prerequisites
 * **Java Development Kit (JDK)**: JDK 17 or higher (Tested & verified on Java 26).
-* **Dependencies**: **Zero** external libraries or build tools required.
+* **Dependencies**: **Zero** external libraries or build tools required (Built solely with pure Java SE).
 
-### 1. Compile
+### 1. Compile (Single-File)
 From the repository root:
 ```bash
 javac Main.java
 ```
 
-### 2. Run Interactive Console UI
+### 2. Run Interactive Console Menu
 ```bash
 java Main
 ```
-*(Default Admin Credentials: Username `admin`, Password `admin123`)*
 
 ### 3. Run Automated Evaluator Test Suite
 ```bash
@@ -50,16 +51,14 @@ java Main --demo
 
 ## 📁 Repository Structure
 ```
-├── screenshots/
-│   ├── dashboard.png                      # Warden dashboard and room occupancy
-│   ├── fees.png                           # Fee defaulters and payment receipt
-│   ├── login.png                          # Console login and authentication
-│   └── students.png                       # Student list and profile lookup
-├── Main.java                              # Complete self-contained Java source code
-├── Project Report - Smart Hostel Management System.md   # Full university project report
-├── Project Report - Smart Hostel Management System.html # Printable formatted report
+├── screenshots/                           # Directory for interface screenshots
+├── Main.java                              # Self-contained Java source code
+├── Project Report - Smart Campus Facility & Lab Booking System.pdf   # Generated PDF report
+├── Project Report - Smart Campus Facility & Lab Booking System.md    # Markdown report
+├── Project Report - Smart Campus Facility & Lab Booking System.html  # Printable report
 ├── README.md                              # Setup, execution guide and overview
-└── statement.md                           # Formal course problem statement
+├── statement.md                           # Formal course problem statement
+└── campus_data.txt                        # Persistent text database
 ```
 
 ---
@@ -67,18 +66,20 @@ java Main --demo
 ## 🧩 OOP Concepts Implemented
 
 1. **Abstraction**:
-   - `Room` (abstract) and `Person` (abstract) define contract methods (`calculateTotalFee(months)`, `getRole()`, `getAmenities()`).
+   - `Facility` and `User` are abstract classes defining common contracts (`getSpecificDetails()`, `getMaxBookingHours()`, `canBookAuditoriumDirectly()`).
 2. **Inheritance**:
-   - `StandardRoom` and `DeluxeACRoom` inherit from base class `Room`.
-   - `Student` inherits from base class `Person`.
+   - `Lab`, `Hall`, and `SportsCourt` extend `Facility`.
+   - `Student` and `FacultyMember` extend `User`.
 3. **Polymorphism**:
-   - Dynamic method dispatch on `calculateTotalFee(int months)` computes custom tariffs (Standard rooms incur flat utility charges; Deluxe AC rooms calculate electricity & AC maintenance surcharges).
+   - Dynamic method dispatch on `getMaxBookingHours()` enforces role policies (Students = 2 hours, Faculty = 6 hours).
+   - Overridden `getSpecificDetails()` displays custom hardware specs depending on facility type.
 4. **Encapsulation**:
-   - All critical state variables (capacity, occupied beds, rent, student dues) are private, accessible solely through validated getters/setters.
-5. **Custom Exceptions**:
-   - `HostelException`, `RoomFullException`, and `InvalidDataException` protect against over-allocation and invalid financial transactions.
+   - State variables are private/protected and modified through validated accessors.
+5. **Conflict Resolution & Exception Handling**:
+   - Time-interval mathematical overlap check prevents simultaneous double-booking.
+   - Custom exceptions (`CampusBookingException`, `SlotUnavailableException`, `InvalidInputException`).
 6. **Data Persistence**:
-   - Reads and writes structured records from `hostel_data.txt`.
+   - Persistent storage in flat file `campus_data.txt`.
 
 ---
 
@@ -86,14 +87,14 @@ java Main --demo
 
 ```
 ========================================================
-    RUNNING AUTOMATED UNIT & CONFLICT TEST HARNESS     
+     RUNNING AUTOMATED SYSTEM & CONFLICT TEST SUITE     
 ========================================================
-[TEST 1] Verifying Room & Student Catalog Loading ...... PASS (Rooms: 6, Students: 5)
-[TEST 2] Testing Polymorphic Fee Calculation ........... PASS (Standard: Rs.48000.0, Deluxe AC: Rs.105000.0)
-[TEST 3] Testing Room Allocation & Bed Counter ......... PASS (Bed assigned in R103)
-[TEST 4] Testing Capacity Limit & RoomFullException ... PASS (Prevented over-allocation)
-[TEST 5] Testing Fee Payment & Overpay Protection ..... PASS (Payment recorded, dues updated)
-[TEST 6] Testing Vacate With Dues Check ................ PASS (Blocked vacate with dues)
+[TEST 1] Verifying Facility & User Catalog Loading .... PASS (Facilities: 6, Users: 5)
+[TEST 2] Testing Standard Booking Creation ............. PASS (Created ID: B104)
+[TEST 3] Testing Slot Conflict & Overlap Prevention ... PASS (Prevented collision: Slot already reserved)
+[TEST 4] Testing Student Max Duration Limit (2 hrs) .... PASS (Quota enforced: Requested duration exceeds allowed limit)
+[TEST 5] Testing Grand Auditorium Booking Restriction . PASS (Restriction enforced: Students cannot directly book grand auditoriums)
+[TEST 6] Testing Cancellation & Slot Freeing ........... PASS (Slot freed upon cancellation and re-booked)
 ========================================================
 Test Summary: 6 / 6 Tests Passed (Score: 100.0%)
 ========================================================
