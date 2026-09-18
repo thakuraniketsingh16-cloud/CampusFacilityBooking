@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Project Report - Smart Hostel Management System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #2c3e50; padding: 25px; margin: 0 auto; max-width: 850px; }
+        .header { text-align: center; border-bottom: 2px solid #2980b9; padding-bottom: 15px; margin-bottom: 25px; }
+        h1 { color: #2c3e50; margin: 5px 0; font-size: 24px; text-transform: uppercase; }
+        h2 { color: #7f8c8d; margin: 3px 0; font-size: 15px; font-weight: normal; }
+        .meta { background: #ecf0f1; padding: 12px 20px; border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13.5px; margin-bottom: 25px; }
+        h3 { color: #2980b9; border-bottom: 1px solid #bdc3c7; padding-bottom: 4px; margin-top: 25px; font-size: 17px; }
+        p, li { font-size: 13.5px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        th, td { border: 1px solid #bdc3c7; padding: 8px 10px; text-align: left; }
+        th { background: #34495e; color: #fff; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 10px; border-radius: 4px; font-size: 12px; }
+        .badge { background: #27ae60; color: white; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 11px; }
+        .btn-print { background: #2980b9; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; float: right; margin-bottom: 15px; }
+        @media print { .btn-print { display: none; } body { padding: 0; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+    <div class="header">
+        <h1>Smart Hostel Management System (SHMS)</h1>
+        <h2>Flipped Course Project Report - Programming in Java</h2>
+        <h2>Platform: VITyarthi | Academic Evaluation</h2>
+    </div>
+    <div class="meta">
+        <div><strong>Course:</strong> Programming in Java</div>
+        <div><strong>Platform:</strong> VITyarthi</div>
+        <div><strong>Student Name:</strong> Aniket Singh</div>
+        <div><strong>GitHub Handle:</strong> thakuraniketsingh16-cloud</div>
+        <div><strong>Architecture:</strong> Pure Java SE (Single File)</div>
+        <div><strong>Verification Status:</strong> 100% Tests Passed</div>
+    </div>
+    <h3>1. Abstract</h3>
+    <p>Managing university student accommodation requires reliable coordination between room allocations, bed occupancies, diverse room tiers (Standard and Deluxe AC), semester billing, and dues clearance. The <strong>Smart Hostel Management System (SHMS)</strong> is a console-based Java application developed to demonstrate core Object-Oriented Programming (OOP) principles. It implements abstraction and inheritance hierarchies, dynamic polymorphic tariff calculations, encapsulation, custom exception handling, and single-file data persistence.</p>
+    
+    <h3>2. Problem Statement & System Objectives</h3>
+    <p>Manual hostel record keeping results in double bed allocations, billing inconsistencies across differing room tiers, and loss of revenue when students vacate without clearing dues. SHMS resolves these through automated capacity validation, polymorphic billing formulas, and dues clearance checks.</p>
+    
+    <h3>3. Object-Oriented Architecture</h3>
+    <p>The system is organized around two primary inheritance hierarchies:</p>
+    <ul>
+        <li><strong>Room Hierarchy:</strong> Abstract class <code>Room</code> extended by <code>StandardRoom</code> and <code>DeluxeACRoom</code>. Each subclass overrides <code>calculateTotalFee(months)</code> to account for tier-specific utility and electrical tariffs.</li>
+        <li><strong>Person Hierarchy:</strong> Abstract class <code>Person</code> extended by <code>Student</code> with attributes for registration number, department, room allocation, and fee balance.</li>
+    </ul>
+
+    <h3>4. Core OOP Principles Applied</h3>
+    <table>
+        <tr><th>OOP Concept</th><th>Application in SHMS</th></tr>
+        <tr><td><strong>Abstraction</strong></td><td>Abstract base classes <code>Room</code> and <code>Person</code> specify contract methods while concealing implementation details.</td></tr>
+        <tr><td><strong>Inheritance</strong></td><td><code>StandardRoom</code> and <code>DeluxeACRoom</code> inherit attributes from <code>Room</code>; <code>Student</code> inherits from <code>Person</code>.</td></tr>
+        <tr><td><strong>Polymorphism</strong></td><td>Dynamic method dispatch computes room fees based on concrete instance type (Standard vs Deluxe AC).</td></tr>
+        <tr><td><strong>Encapsulation</strong></td><td>Private fields accessed exclusively via validated getter and setter methods.</td></tr>
+        <tr><td><strong>Exception Handling</strong></td><td>Custom exceptions (<code>HostelException</code>, <code>RoomFullException</code>, <code>InvalidDataException</code>) guard business operations.</td></tr>
+    </table>
+
+    <h3>5. Automated Test Suite Results</h3>
+    <table>
+        <tr><th>Test #</th><th>Test Case</th><th>Expected Result</th><th>Actual Result</th><th>Status</th></tr>
+        <tr><td>1</td><td>Room & Student Catalog Loading</td><td>Parse entities from data file</td><td>6 rooms, 5 students loaded</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>2</td><td>Polymorphic Fee Calculation</td><td>Accurate tariff computation</td><td>Std: Rs.48000, Deluxe: Rs.105000</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>3</td><td>Room Allocation & Bed Counter</td><td>Increment bed count on allocation</td><td>R103 bed count incremented</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>4</td><td>Capacity Limit & Over-allocation Check</td><td>Reject allocation when room full</td><td>RoomFullException caught</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>5</td><td>Fee Payment & Balance Update</td><td>Deduct payment from pending dues</td><td>Balance updated accurately</td><td><span class="badge">PASS</span></td></tr>
+        <tr><td>6</td><td>Vacate Room With Dues Check</td><td>Block vacate if balance remains</td><td>InvalidDataException caught</td><td><span class="badge">PASS</span></td></tr>
+    </table>
+    <p><strong>Overall Score: 6 / 6 Tests Passed (100.0%)</strong></p>
+
+    <h3>6. Declaration of Originality</h3>
+    <p><em>I declare that this project and its accompanying documentation are my original work submitted for the Programming in Java course on the VITyarthi platform. All code logic, OOP structures, and tests were written independently in compliance with academic guidelines.</em></p>
+</body>
+</html>

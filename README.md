@@ -1,188 +1,99 @@
-# Smart Campus Facility & Lab Booking System
+﻿# Smart Hostel Management System (SHMS)
 
-A modular, zero-dependency Java terminal application for managing, scheduling, and reserving university campus facilities, laboratories, seminar halls, and sports grounds with automatic conflict detection, role-based quota rules, and persistent single-file database storage.
+A robust, console-driven Java application for managing university hostel rooms, bed allocations, student records, and fee payment tracking with automated capacity enforcement and persistent flat-file storage.
 
 Developed for **Programming in Java** course evaluation.
 
 ---
 
-## 1. Project Overview & Problem Statement
+## 📸 Screenshots
 
-In an academic campus environment, shared resources—such as high-performance computing labs, specialized hardware research facilities, seminar auditoriums, and sports courts—face frequent scheduling conflicts, double bookings, and lack of visibility.
+| Login & Authentication | Warden Admin Dashboard |
+| :---: | :---: |
+| ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) |
 
-This project provides a robust, command-line driven management and reservation system featuring:
-- **Role-Based Access**: Specialized rules for Students (2-hour session limit, auditorium restrictions) and Faculty (extended 6-hour slots, direct auditorium reservations).
-- **Automated Conflict Resolution**: Rigorous interval-overlap algorithm preventing simultaneous or overlapping bookings for any facility.
-- **Single-File Text Database**: Persistent storage in `data/campus_data.txt` with formatted pipe-delimited records (`FAC|...`, `USR|...`, `BKG|...`).
-- **Interactive & Headless CLI Modes**: Full interactive console menu for manual operations, alongside non-interactive CLI flags (`--demo`, `--test`) designed for automated grading scripts.
-- **Pure Java Standard Library**: Zero external `.jar` dependencies. Compiles and executes cleanly out-of-the-box on Java 17, 21, and 26.
+| Student Management & Profiles | Fee Management & Receipts |
+| :---: | :---: |
+| ![Students](screenshots/students.png) | ![Fees](screenshots/fees.png) |
 
 ---
 
-## 2. Environment Setup & Prerequisites
+## ⚡ Quick Start & Execution
 
-- **Java Development Kit (JDK)**: JDK 17 or higher (tested and verified on Java SE 26.0.1).
-- **Operating System**: Windows, Linux, or macOS.
-- **External Dependencies**: **None** (Built exclusively using standard `java.lang`, `java.util`, `java.io`, `java.time`).
+### Prerequisites
+* **Java Development Kit (JDK)**: JDK 17 or higher (Tested & verified on Java 26).
+* **Dependencies**: **Zero** external libraries or build tools required.
 
-### Verify Java Installation
-Open your terminal and verify your JDK version:
+### 1. Compile
+From the repository root:
 ```bash
-java -version
-javac -version
+javac Main.java
+```
+
+### 2. Run Interactive Console UI
+```bash
+java Main
+```
+*(Default Admin Credentials: Username `admin`, Password `admin123`)*
+
+### 3. Run Automated Evaluator Test Suite
+```bash
+java Main --test
+```
+
+### 4. Run Non-Interactive Demo
+```bash
+java Main --demo
 ```
 
 ---
 
-## 3. Step-by-Step Compilation & Execution Instructions
-
-### A. Windows (Command Prompt / CMD)
-1. **Compile**:
-   ```cmd
-   compile.bat
-   ```
-   *(Or manual command: `javac -d bin src\campus\models\*.java src\campus\exceptions\*.java src\campus\storage\*.java src\campus\service\*.java src\campus\*.java`)*
-
-2. **Run Interactive Menu**:
-   ```cmd
-   run.bat
-   ```
-   *(Or manual command: `java -cp bin campus.Main`)*
-
-3. **Run Automated Test Suite (Grading Validation)**:
-   ```cmd
-   run.bat --test
-   ```
-
-4. **Run Headless Demonstration**:
-   ```cmd
-   run.bat --demo
-   ```
-
----
-
-### B. Windows (PowerShell)
-1. **Compile**:
-   ```powershell
-   .\compile.ps1
-   ```
-2. **Run Interactive Menu**:
-   ```powershell
-   .\run.ps1
-   ```
-3. **Run Automated Test Suite**:
-   ```powershell
-   .\run.ps1 --test
-   ```
-
----
-
-### C. Linux / macOS (Terminal / Bash)
-1. Grant execute permissions (first time only):
-   ```bash
-   chmod +x compile.sh run.sh
-   ```
-2. **Compile**:
-   ```bash
-   ./compile.sh
-   ```
-3. **Run Interactive Menu**:
-   ```bash
-   ./run.sh
-   ```
-4. **Run Automated Test Suite**:
-   ```bash
-   ./run.sh --test
-   ```
-5. **Run Headless Demo**:
-   ```bash
-   ./run.sh --demo
-   ```
-
----
-
-## 4. Command Line Flags (Automated Evaluator Friendly)
-
-The application supports command line arguments so automated grading pipelines can evaluate it without hanging on console input:
-
-| Flag | Description |
-| :--- | :--- |
-| `(no args)` | Launches the interactive terminal menu with user switching and live reservation creation. |
-| `--test` | Runs the 6-point self-test suite (data loading, booking creation, double-booking rejection, duration limit checks, permissions, cancellation & rebooking) and exits with status 0. |
-| `--demo` | Executes an end-to-end non-interactive demonstration and outputs an analytics summary. |
-| `--help` / `-h` | Prints available command line arguments. |
-
----
-
-## 5. Project Architecture & Package Structure
-
+## 📁 Repository Structure
 ```
-CampusFacilityBooking/
-├── README.md                      # Evaluator setup and execution guide
-├── PROJECT_REPORT.md              # Academic submission report
-├── compile.bat / compile.ps1      # Windows build scripts
-├── run.bat / run.ps1              # Windows launch scripts
-├── compile.sh / run.sh            # Linux/macOS build & launch scripts
-├── .gitignore                     # Git ignore rules for compiled classes
-├── data/
-│   └── campus_data.txt            # Single-file text database
-└── src/
-    └── campus/
-        ├── Main.java              # Application entry point & CLI handler
-        ├── models/
-        │   ├── Facility.java      # Base abstract facility
-        │   ├── Lab.java           # Computer/IoT lab subclass
-        │   ├── Hall.java          # Auditorium/seminar hall subclass
-        │   ├── SportsCourt.java   # Badminton/tennis court subclass
-        │   ├── User.java          # Base abstract user
-        │   ├── Student.java       # Student subclass with 2hr limit
-        │   ├── Faculty.java       # Faculty subclass with priority
-        │   └── Booking.java       # Booking record with time interval logic
-        ├── exceptions/
-        │   ├── BookingException.java         # Base domain exception
-        │   ├── SlotUnavailableException.java # Double-booking conflict exception
-        │   └── InvalidInputException.java    # Bad input/format exception
-        ├── storage/
-        │   └── DataFileManager.java          # Single-file database I/O manager
-        └── service/
-            ├── BookingService.java           # Core business logic & analytics
-            └── TestRunner.java               # Automated test suite
+├── screenshots/
+│   ├── dashboard.png                      # Warden dashboard and room occupancy
+│   ├── fees.png                           # Fee defaulters and payment receipt
+│   ├── login.png                          # Console login and authentication
+│   └── students.png                       # Student list and profile lookup
+├── Main.java                              # Complete self-contained Java source code
+├── Project Report - Smart Hostel Management System.md   # Full university project report
+├── Project Report - Smart Hostel Management System.html # Printable formatted report
+├── README.md                              # Setup, execution guide and overview
+└── statement.md                           # Formal course problem statement
 ```
 
 ---
 
-## 6. Key OOP Concepts Implemented
+## 🧩 OOP Concepts Implemented
 
 1. **Abstraction**:
-   - `Facility` and `User` are defined as abstract classes specifying essential contract methods (`getSpecificDetails()`, `getMaxBookingHours()`, `canBookAuditoriumDirectly()`) while hiding low-level implementation.
+   - `Room` (abstract) and `Person` (abstract) define contract methods (`calculateTotalFee(months)`, `getRole()`, `getAmenities()`).
 2. **Inheritance**:
-   - `Lab`, `Hall`, and `SportsCourt` extend `Facility`.
-   - `Student` and `Faculty` extend `User`.
+   - `StandardRoom` and `DeluxeACRoom` inherit from base class `Room`.
+   - `Student` inherits from base class `Person`.
 3. **Polymorphism**:
-   - Dynamic method dispatch on `getMaxBookingHours()` enforces distinct quota limits (Students = 2 hrs, Faculty = 6 hrs).
-   - Overridden `getSpecificDetails()` yields specialized specifications depending on whether the entity is a computer lab, seminar hall, or sports court.
+   - Dynamic method dispatch on `calculateTotalFee(int months)` computes custom tariffs (Standard rooms incur flat utility charges; Deluxe AC rooms calculate electricity & AC maintenance surcharges).
 4. **Encapsulation**:
-   - Private/protected instance fields accessible strictly through validated getter and setter methods.
-5. **Exception Handling**:
-   - Custom checked exception hierarchy (`BookingException`, `SlotUnavailableException`, `InvalidInputException`) prevents unhandled runtime crashes and provides meaningful user guidance.
-6. **Persistence & File I/O**:
-   - Uses `BufferedReader` and `BufferedWriter` with try-with-resources to read and write the single structured file `data/campus_data.txt`.
+   - All critical state variables (capacity, occupied beds, rent, student dues) are private, accessible solely through validated getters/setters.
+5. **Custom Exceptions**:
+   - `HostelException`, `RoomFullException`, and `InvalidDataException` protect against over-allocation and invalid financial transactions.
+6. **Data Persistence**:
+   - Reads and writes structured records from `hostel_data.txt`.
 
 ---
 
-## 7. Automated Test Suite Results
+## 🧪 Test Suite Results (`java Main --test`)
 
-Running `run.bat --test` outputs:
 ```
 ========================================================
-     RUNNING AUTOMATED SYSTEM & CONFLICT TEST SUITE     
+    RUNNING AUTOMATED UNIT & CONFLICT TEST HARNESS     
 ========================================================
-[TEST 1] Verifying Data File Loading ................... PASS (Facilities: 6, Users: 5)
-[TEST 2] Testing Standard Booking Creation ............. PASS (Created ID: B105)
-[TEST 3] Testing Slot Conflict Detection .............. PASS (Correctly prevented double-booking)
-[TEST 4] Testing Student Max Duration Limit ............ PASS (Quota enforced: Selected duration exceeds allowed limit of 2 hrs for Student)
-[TEST 5] Testing Auditorium Booking Restriction ........ PASS (Restriction enforced: Students cannot directly book grand auditoriums)
-[TEST 6] Testing Cancellation & Slot Freeing ........... PASS (Slot freed upon cancellation and re-booked successfully)
+[TEST 1] Verifying Room & Student Catalog Loading ...... PASS (Rooms: 6, Students: 5)
+[TEST 2] Testing Polymorphic Fee Calculation ........... PASS (Standard: Rs.48000.0, Deluxe AC: Rs.105000.0)
+[TEST 3] Testing Room Allocation & Bed Counter ......... PASS (Bed assigned in R103)
+[TEST 4] Testing Capacity Limit & RoomFullException ... PASS (Prevented over-allocation)
+[TEST 5] Testing Fee Payment & Overpay Protection ..... PASS (Payment recorded, dues updated)
+[TEST 6] Testing Vacate With Dues Check ................ PASS (Blocked vacate with dues)
 ========================================================
 Test Summary: 6 / 6 Tests Passed (Score: 100.0%)
 ========================================================
