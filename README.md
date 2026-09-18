@@ -60,4 +60,4 @@ The application is developed as a single Java source file (`Main.java`) and prov
 
 | Campus Analytics | Booking Window |
 |---|---|
-| ![Campus Analytics](screenshots/Booking%20window.png)) | ![Booking Window](screenshots/Campus%20Analytics.png) |
+| ![Campus Analytics](screenshots/Campus%20Analytics.png)) | ![Booking Window](screenshots/Booking%20window.png) |
