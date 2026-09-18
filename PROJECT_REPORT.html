@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Report - Smart Campus Facility & Lab Booking System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 60px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            font-size: 26px;
+            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header h2 {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+        .meta-box {
+            background-color: #ecf0f1;
+            padding: 15px 25px;
+            border-radius: 6px;
+            margin: 20px 0 30px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 14px;
+        }
+        .meta-item strong {
+            color: #34495e;
+        }
+        h2.section-title {
+            color: #2980b9;
+            border-left: 5px solid #2980b9;
+            padding-left: 12px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        p, li {
+            text-align: justify;
+            font-size: 14.5px;
+        }
+        code {
+            background: #f4f6f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 13.5px;
+            color: #c0392b;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        table th, table td {
+            border: 1px solid #bdc3c7;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        table th {
+            background-color: #34495e;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .pass-badge {
+            background-color: #27ae60;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .declaration-box {
+            border: 2px dashed #95a5a6;
+            padding: 20px;
+            border-radius: 6px;
+            background: #fafbfc;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        @media print {
+            body { background: none; padding: 0; }
+            .container { box-shadow: none; padding: 20px; }
+            .no-print { display: none; }
+        }
+        .btn-print {
+            display: inline-block;
+            background: #2980b9;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print" style="text-align: right;">
+        <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+
+    <div class="header">
+        <h1>Smart Campus Facility & Lab Booking System</h1>
+        <h2>Flipped Course Project Report — Programming in Java</h2>
+        <h2>Platform: VITyarthi | Academic Evaluation</h2>
+    </div>
+
+    <div class="meta-box">
+        <div class="meta-item"><strong>Course:</strong> Programming in Java</div>
+        <div class="meta-item"><strong>Platform:</strong> VITyarthi</div>
+        <div class="meta-item"><strong>Student Name:</strong> Aniket Singh</div>
+        <div class="meta-item"><strong>GitHub User:</strong> thakuraniketsingh16-cloud</div>
+        <div class="meta-item"><strong>Language / Runtime:</strong> Java SE 17+ (Pure Standard Library)</div>
+        <div class="meta-item"><strong>Status:</strong> 100% Test Pass (Zero External JARs)</div>
+    </div>
+
+    <h2 class="section-title">1. Abstract</h2>
+    <p>
+        In an academic campus environment, shared infrastructure including high-performance computing labs, specialized hardware research centers, seminar halls, and sports arenas experience frequent scheduling bottlenecks and booking collisions.
+    </p>
+    <p>
+        This project implements the <strong>Smart Campus Facility & Lab Booking System</strong>, a lightweight, highly reliable terminal application developed entirely in standard Java. The software leverages Object-Oriented Programming (OOP) principles to represent polymorphic facilities and user profiles, enforces mathematical interval-overlap conflict detection, implements role-specific quotas (students vs. faculty), and persists data within a single-file text database (<code>data/campus_data.txt</code>). Both an interactive console menu and non-interactive command-line flags (<code>--test</code>, <code>--demo</code>) are supported to ensure compatibility with automated evaluation scripts and manual grading alike.
+    </p>
+
+    <h2 class="section-title">2. Problem Statement & Objectives</h2>
+    <h3>2.1 Problem Statement</h3>
+    <p>
+        University departments and student clubs require access to campus resources. Without a centralized, rule-enforced booking engine, problems such as double-booking identical time slots, students over-reserving lab resources, and unauthorized auditorium bookings occur frequently.
+    </p>
+    <h3>2.2 Objectives</h3>
+    <ul>
+        <li><strong>Pure Java Implementation:</strong> Zero third-party dependencies; compiles instantly using standard <code>javac</code>.</li>
+        <li><strong>Core OOP Compliance:</strong> Full demonstration of Abstraction, Inheritance, Polymorphism, and Encapsulation.</li>
+        <li><strong>Conflict Prevention:</strong> Algorithmic verification of requested intervals against active reservations.</li>
+        <li><strong>Single-File Persistence:</strong> Flat text-file database utilizing human-readable pipe-delimited records.</li>
+        <li><strong>Automated Evaluator Compliance:</strong> Non-interactive <code>--test</code> flag executing self-diagnostics with exit codes.</li>
+    </ul>
+
+    <h2 class="section-title">3. Object-Oriented System Architecture</h2>
+    <h3>3.1 Hierarchy of Classes</h3>
+    <ul>
+        <li><strong>Facility (Abstract Base):</strong> Represents shared physical campus locations.
+            <ul>
+                <li><code>Lab</code>: Includes workstation count, operating system, dedicated GPU specifications.</li>
+                <li><code>Hall</code>: Covers seating capacity, A/V systems, projectors, and air conditioning.</li>
+                <li><code>SportsCourt</code>: Specifies indoor/outdoor nature, surface type (synthetic, clay, wood), and floodlights.</li>
+            </ul>
+        </li>
+        <li><strong>User (Abstract Base):</strong> Models individuals interacting with the campus booking engine.
+            <ul>
+                <li><code>Student</code>: Constrained to a 2-hour maximum booking session to prevent resource hogging. Direct grand auditorium bookings restricted.</li>
+                <li><code>Faculty</code>: Granted extended 6-hour research/seminar reservations and direct auditorium access.</li>
+            </ul>
+        </li>
+        <li><strong>Booking:</strong> Immutable record storing reservation identity, user ID, facility ID, date, start/end times, status (<code>CONFIRMED</code>, <code>CANCELLED</code>), and purpose.</li>
+    </ul>
+
+    <h2 class="section-title">4. Core OOP Principles Applied</h2>
+    <table style="width:100%">
+        <tr>
+            <th>OOP Principle</th>
+            <th>Implementation in Project</th>
+        </tr>
+        <tr>
+            <td><strong>Abstraction</strong></td>
+            <td>Abstract classes <code>Facility</code> and <code>User</code> define base signatures (<code>getSpecificDetails()</code>, <code>getMaxBookingHours()</code>, <code>canBookAuditoriumDirectly()</code>) hiding low-level details.</td>
+        </tr>
+        <tr>
+            <td><strong>Inheritance</strong></td>
+            <td><code>Lab</code>, <code>Hall</code>, and <code>SportsCourt</code> inherit core attributes (<code>id</code>, <code>name</code>, <code>capacity</code>, <code>location</code>) from <code>Facility</code>. <code>Student</code> and <code>Faculty</code> inherit from <code>User</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>Polymorphism</strong></td>
+            <td>Dynamic method dispatch handles user quota limits: <code>student.getMaxBookingHours()</code> returns 2, whereas <code>faculty.getMaxBookingHours()</code> returns 6.</td>
+        </tr>
+        <tr>
+            <td><strong>Encapsulation</strong></td>
+            <td>All class attributes are declared <code>private</code> or <code>protected</code> with validated getter and setter accessors.</td>
+        </tr>
+        <tr>
+            <td><strong>Exception Handling</strong></td>
+            <td>Custom domain exceptions (<code>BookingException</code>, <code>SlotUnavailableException</code>, <code>InvalidInputException</code>) safely handle business-rule violations.</td>
+        </tr>
+    </table>
+
+    <h2 class="section-title">5. Persistence & Storage Specification</h2>
+    <p>All data is maintained in a single text file located at <code>data/campus_data.txt</code>:</p>
+    <pre># Record Format Specifications:
+FAC|ID|Name|Type|Capacity|Location|ExtraDetail
+USR|ID|Name|Role|Email|Department|ExtraDetail
+BKG|BookingID|UserID|FacilityID|Date|StartTime|EndTime|Status|Purpose
+
+# Sample Entries:
+FAC|F101|Alan Turing Computer Lab|Lab|45|Tech Block 2nd Floor|Workstations: 45, OS: Ubuntu, Dedicated GPU: Yes
+USR|U1001|Aarav Sharma|Student|aarav.sharma@campus.edu|Computer Science|RegNo: 24BCE1042
+BKG|B101|U1001|F101|2026-09-20|10:00|12:00|CONFIRMED|AI Lab Project Work</pre>
+
+    <h2 class="section-title">6. Test Cases & Verification Results</h2>
+    <p>The system was validated using the built-in automated test suite (<code>run.bat --test</code>):</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Test #</th>
+                <th>Test Description</th>
+                <th>Expected Outcome</th>
+                <th>Actual Result</th>
+                <th>Verdict</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Data File Loading</td>
+                <td>Parse facilities & users from file</td>
+                <td>Loaded 6 facilities, 5 users</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Standard Booking Creation</td>
+                <td>Reserve open slot on future date</td>
+                <td>Generated B105 (CONFIRMED)</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Double-Booking Conflict Check</td>
+                <td>Reject overlapping interval on same room</td>
+                <td>SlotUnavailableException thrown</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Student Quota Enforcement</td>
+                <td>Reject 4-hour reservation by student</td>
+                <td>InvalidInputException thrown (limit 2 hrs)</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Auditorium Access Restriction</td>
+                <td>Block direct student booking for auditorium</td>
+                <td>BookingException thrown</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Cancellation & Slot Freeing</td>
+                <td>Free cancelled slot for subsequent user</td>
+                <td>Slot successfully re-booked</td>
+                <td><span class="pass-badge">PASS</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>Overall Test Score:</strong> 6 / 6 Tests Passed (100.0%)</p>
+
+    <div class="declaration-box">
+        <strong>Academic Declaration:</strong><br>
+        I declare that this project report and the accompanying source code are my original work submitted for the Programming in Java course on the VITyarthi platform. The system design, object hierarchy, file storage parsing, and test verification suite were implemented in strict compliance with the academic guidelines.
+    </div>
+</div>
+
+</body>
+</html>
